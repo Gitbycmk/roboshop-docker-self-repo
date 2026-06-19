@@ -20,7 +20,7 @@ services:
   rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
-    environments:
+    environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
 
@@ -31,7 +31,7 @@ services:
     depends_on:
     - mongodb
     - redis
-    
+
   cart:
     build: ./cart
     image: joindevops/cart:v1
