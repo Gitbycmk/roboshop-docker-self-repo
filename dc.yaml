@@ -7,23 +7,27 @@ services:
     container_name: catalogue
     depends_on:
     - mongodb
+
   mongodb:
     build: ./mongodb
     image: cloudcmk/mongodb:v1
     container_name: mongodb
     volumes:
     - mongodb:/data/db
+
   redis:
     image: redis:7.0
     container_name: redis
     volumes:
     - redis:/data
+
   mysql:
     build: ./mysql
     image: cloudcmk/mysql:v1
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
+
   rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
@@ -32,6 +36,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
+
   user:
     build: ./user
     image: cloudcmk/user:v1
@@ -39,6 +44,7 @@ services:
     depends_on:
     - mongodb
     - redis
+
   cart:
     build: ./cart
     image: cloudcmk/cart:v1
@@ -46,6 +52,7 @@ services:
     depends_on:
     - redis
     - catalogue
+
   shipping:
     build: ./shipping
     image: cloudcmk/shipping:v1
@@ -53,6 +60,7 @@ services:
     depends_on:
     - mysql
     - cart
+
   payment:
     build: ./payment
     image: cloudcmk/payment:v1
@@ -61,6 +69,7 @@ services:
     - rabbitmq
     - cart
     - user
+
   frontend:
     build: ./frontend
     image: cloudcmk/frontend:v1
@@ -73,6 +82,7 @@ services:
     - cart
     - shipping
     - payment
+    
 networks:
   default:
     driver: bridge
